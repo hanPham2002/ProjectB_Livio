@@ -62,18 +62,42 @@ export default function EmailVerification() {
                         form={form}
                         onFinish={onFinish}
                         layout="horizontal"
-                        style={{ display: 'flex', justifyContent: 'space-between', gap: '8px' }}
                     >
-                        {Array.from({ length: 6 }, (_, i) => (
-                            <Form.Item
-                                key={i}
-                                name={`digit${i}`}
-                                rules={[{ required: true, message: '' }]}
-                                style={{ flex: 1 }}
+                        {/*6 code entry boxes*/}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', marginBottom: '24px' }}>
+                            {Array.from({ length: 6 }, (_, i) => (
+                                <Form.Item
+                                    key={i}
+                                    name={`digit${i}`}
+                                    rules={[{ required: true, message: '' }]}
+                                    style={{ flex: 1 }}
+                                >
+                                    <Input maxLength={1} style={{ textAlign: 'center', fontSize: '18px', padding: '8px' }} />
+                                </Form.Item>
+                            ))}
+                        </div>
+
+                        {/* Verify  Button */}
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                block
+                                style={{ backgroundColor: '#839EBC', borderColor: '#839EBC', borderRadius: '50px',padding: '20px' }}
                             >
-                                <Input maxLength={1} style={{ textAlign: 'center', fontSize: '18px', padding: '8px' }} />
-                            </Form.Item>
-                        ))}
+                                Verify
+                            </Button>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                block
+                                style={{ backgroundColor: '#1B4372', borderColor: '#1B4372', borderRadius: '50px',padding: '20px' }}
+                            >
+                                Resend Email
+                            </Button>
+                        </Form.Item>
                     </Form>
                 </div>
             </Content>
