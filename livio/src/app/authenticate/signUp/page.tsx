@@ -1,9 +1,8 @@
-//Sign Up with email page
 'use client'
 import React from 'react';
-import { Form, Input, Button, Typography, Layout, Space, Divider } from 'antd';
+import { Form, Input, Button, Typography, Layout, Divider } from 'antd';
+import { useRouter } from 'next/navigation'; // Để điều hướng trang sau khi đăng ký thành công
 import 'antd/dist/reset.css';
-
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -14,22 +13,43 @@ interface EmailProps {
 
 export default function SignUpEmail() {
     const [form] = Form.useForm<EmailProps>();
-    const onFinish = (values: EmailProps) => {
-        console.log('Submit data:', values);
+    const router = useRouter(); // Khởi tạo router để điều hướng đến trang xác minh email
+
+    const onFinish = async (values: EmailProps) => {
+        const { email } = values;
+
+
+        // Gửi yêu cầu đăng ký đến API
+        try {
+            const response = await fetch('https://localhost:44383/api/Users/Register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            if (response.ok) {
+                alert('Registration successful!');
+                // Lưu email vào sessionStorage
+                sessionStorage.setItem("email", email);
+                router.push('/authenticate/signUp/verifyEmail'); // Điều hướng đến trang xác minh email
+            } else {
+                const error = await response.text();
+                alert(`Registration failed: ${error}`);
+            }
+        } catch (error) {
+            console.error('Network Error:', error);
+            alert('An error occurred while connecting to the API.');
+        }
     };
 
     return (
         <Layout style={{ minHeight: '100vh', backgroundColor: '#C5D3E8' }}>
-            {/* Header */}
-            <Header style={{ backgroundColor: '#C5D3E8', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 40px' }}>
+            <Header style={{ backgroundColor: '#C5D3E8', padding: '0 40px' }}>
                 <div style={{ fontSize: '30px', fontWeight: 'bold' }}>LOGO</div>
-                <Space>
-                    <Button type="default" style={{ backgroundColor: '#5C7893', color: 'white', border: '100' }}>Log In</Button>
-                    <Button type="default" style={{ backgroundColor: '#90A6BF', color: 'black', border: '100' }}>Sign Up</Button>
-                </Space>
             </Header>
 
-            {/* Main content */}
             <Content style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px 20px' }}>
                 <div style={{
                     backgroundColor: '#ADC1D7',
@@ -39,8 +59,8 @@ export default function SignUpEmail() {
                     width: '100%',
                     maxWidth: '500px'
                 }}>
-                    <Title level={3} style={{ textAlign: 'center', color: '#1B4372', fontSize:'25px',fontWeight: 'bold' }}>Sign up</Title>
-                    <Text style={{ display: 'block', textAlign: 'center', marginBottom: '24px',color:'#748291' }}>
+                    <Title level={3} style={{ textAlign: 'center', color: '#1B4372', fontSize: '25px', fontWeight: 'bold' }}>Sign up</Title>
+                    <Text style={{ display: 'block', textAlign: 'center', marginBottom: '24px', color: '#748291' }}>
                         Start your journey on Livio and shape the future of your life.
                     </Text>
 
@@ -65,7 +85,7 @@ export default function SignUpEmail() {
                                 },
                             ]}
                         >
-                            <Input style={{borderRadius: '50px',padding:'8px'}} placeholder="Enter Email" />
+                            <Input style={{ borderRadius: '50px', padding: '8px' }} placeholder="Enter Email" />
                         </Form.Item>
 
                         {/* Confirm Button */}
@@ -74,7 +94,7 @@ export default function SignUpEmail() {
                                 type="primary"
                                 htmlType="submit"
                                 block
-                                style={{ backgroundColor: '#1B4372', borderColor: '#1B4372', borderRadius: '50px',padding: '20px' }}
+                                style={{ backgroundColor: '#1B4372', borderColor: '#1B4372', borderRadius: '50px', padding: '20px' }}
                             >
                                 Confirm
                             </Button>
@@ -89,14 +109,14 @@ export default function SignUpEmail() {
                         type="primary"
                         icon={<img src="/google.png" alt="Google" style={{ width: 24, height: 24 }} />}
                         block
-                        style={{ backgroundColor: 'rgba(3, 52, 110, 0.25)',borderColor: 'rgba(3, 52, 110, 0.25)', fontWeight: 'bold', borderRadius: '50px',padding: '20px' }}
+                        style={{ backgroundColor: 'rgba(3, 52, 110, 0.25)', borderColor: 'rgba(3, 52, 110, 0.25)', fontWeight: 'bold', borderRadius: '50px', padding: '20px' }}
                     >
                         Sign in with Google
                     </Button>
 
                     {/* Sign up link */}
                     <div style={{ marginTop: '16px', textAlign: 'center' }}>
-                        <Text style={{color:'#748291'}}>Don't have an account? <a href="#">Sign Up</a></Text>
+                        <Text style={{ color: '#748291' }}>Don't have an account? <a href="#">Sign Up</a></Text>
                     </div>
                 </div>
             </Content>
