@@ -100,7 +100,7 @@ export default function Login() {
 
                         {/* Forgot Password */}
                         <div style={{ textAlign: 'right', marginBottom: '10px' }}>
-                            <a href="#" style={{ color: '#1B4372' }}>Forgot Password?</a>
+                            <a href="/authenticate/login/forgotPassword" style={{ color: '#1B4372' }}>Forgot Password?</a>
                         </div>
 
                         {/* Login Button */}
@@ -132,7 +132,7 @@ export default function Login() {
 
                     {/* Sign up link */}
                     <div style={{ marginTop: '16px', textAlign: 'center' }}>
-                        <Text style={{ color: '#748291' }}>Don't have an account? <a href="#">Sign Up</a></Text>
+                        <Text style={{ color: '#748291' }}>Don't have an account? <a href="/authenticate/signUp">Sign Up</a></Text>
                     </div>
                 </div>
             </Content>
