@@ -21,7 +21,7 @@ export default function SignUpEmail() {
 
         // Gửi yêu cầu đăng ký đến API
         try {
-            const response = await fetch('https://localhost:44383/api/Users/Register', {
+            const response = await fetch('https://localhost:44383/api/Users/ResetPassword', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,10 +59,7 @@ export default function SignUpEmail() {
                     width: '100%',
                     maxWidth: '500px'
                 }}>
-                    <Title level={3} style={{ textAlign: 'center', color: '#1B4372', fontSize: '25px', fontWeight: 'bold' }}>Sign up</Title>
-                    <Text style={{ display: 'block', textAlign: 'center', marginBottom: '24px', color: '#748291' }}>
-                        Start your journey on Livio and shape the future of your life.
-                    </Text>
+                    <Title level={3} style={{ textAlign: 'center', color: '#1B4372', fontSize: '25px', fontWeight: 'bold' }}>Forgot Password</Title>
 
                     <Form
                         form={form}
@@ -72,7 +69,7 @@ export default function SignUpEmail() {
                     >
                         {/* Email */}
                         <Form.Item
-                            label="Email"
+                            label="Enter your resistered email"
                             name="email"
                             rules={[
                                 {
@@ -96,28 +93,10 @@ export default function SignUpEmail() {
                                 block
                                 style={{ backgroundColor: '#1B4372', borderColor: '#1B4372', borderRadius: '50px', padding: '20px' }}
                             >
-                                Confirm
+                                Continue
                             </Button>
                         </Form.Item>
                     </Form>
-
-                    {/* Divider */}
-                    <Divider plain>Or</Divider>
-
-                    {/* Google Sign-in Button */}
-                    <Button
-                        type="primary"
-                        icon={<img src="/google.png" alt="Google" style={{ width: 24, height: 24 }} />}
-                        block
-                        style={{ backgroundColor: 'rgba(3, 52, 110, 0.25)', borderColor: 'rgba(3, 52, 110, 0.25)', fontWeight: 'bold', borderRadius: '50px', padding: '20px' }}
-                    >
-                        Sign in with Google
-                    </Button>
-
-                    {/* Sign up link */}
-                    <div style={{ marginTop: '16px', textAlign: 'center' }}>
-                        <Text style={{ color: '#748291' }}>Don't have an account? <a href="#">Sign Up</a></Text>
-                    </div>
                 </div>
             </Content>
         </Layout>
